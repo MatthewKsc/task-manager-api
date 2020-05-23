@@ -1,3 +1,14 @@
+# Task Manager
+This project is created with Spring Boot backend and 
+Angular frontend.
+
+* `task-manager/src/main/java/com/matthewksc/taskmanager/controllers` -> folder with
+basic controllers to provide Task and TaskList endpoints
+* `task-manager/src/main/java/com/matthewksc/taskmanager/dao` ->
+folder with entity's and repositories
+* `task-manager/src/main/java/com/matthewksc/taskmanager/services` ->
+folder separate dao from controllers.
+
 # TaskNgApi
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.6.
