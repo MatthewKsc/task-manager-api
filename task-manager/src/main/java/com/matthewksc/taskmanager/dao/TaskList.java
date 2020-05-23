@@ -22,7 +22,6 @@ public class TaskList {
     }
 
     public TaskList(String categoryOfTask) {
-        this.tasks = tasks;
         this.categoryOfTask = categoryOfTask;
     }
 

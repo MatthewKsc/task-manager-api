@@ -1,5 +1,7 @@
 package com.matthewksc.taskmanager.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,6 +16,7 @@ public class Task {
     private Date dateOfCreate;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore //prevent of nested calls
     private TaskList taskList;
 
     public Task() {
