@@ -5,15 +5,16 @@
       <input type="text"
              class="form-control"
              style="width: 100%;"
-             placeholder="Search notes...">
+             placeholder="Search tasks...">
     </div>
     <div class="col-md-4">
-      <button type="buton"
+      <button type="button"
               (click)="createTaskList()"
               class="btn btn-info pull-right"
               style="margin-left:12px;"><i class="fa fa-plus"></i> New TaskList
       </button>
       <button type="button"
+              [disabled]="selectedTaskList==null"
               class="btn btn-warning pull-right"
               style="margin-left:12px;"><i class="fa fa-plus"></i> New Task
       </button>
@@ -27,11 +28,11 @@
     <div class="col-md-3">
       <br>
       <div class="list-group list-group-flush">
-        <a class="list-group-item list-group-item-action">
+        <a (click)="selectedTaskList = null" class="list-group-item list-group-item-action">
           <i class="fa fa-book"></i>&nbsp;All
         </a>
         <!-- TaskList -->
-        <a *ngFor="let taskList of taskLists" class="list-group-item list-group-item-action">
+        <a *ngFor="let taskList of taskLists" (click)="selectTaskList(taskList)" class="list-group-item list-group-item-action">
           <i class="fa fa-book"></i>&nbsp;
           <input [(ngModel)]="taskList.categoryOfTask" (change)="updateTaskList(taskList)" type="text" class="input-label" style="width: 80%"/>
           <a (click)="deleteTaskList(taskList)" class="pull-right text-danger">

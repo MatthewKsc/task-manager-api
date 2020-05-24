@@ -9,6 +9,7 @@ import {ApiServiceService} from "../services/api-service.service";
 })
 export class TaskComponent implements OnInit {
   taskLists: TaskList[] = [];
+  selectedTaskList: TaskList;
 
   constructor(private apiService: ApiServiceService) { }
 
@@ -64,5 +65,9 @@ export class TaskComponent implements OnInit {
         }
       )
     }
+  }
+
+  selectTaskList(taskList: TaskList) {
+    this.selectedTaskList = taskList;
   }
 }

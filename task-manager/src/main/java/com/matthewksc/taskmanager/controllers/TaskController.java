@@ -3,6 +3,8 @@ package com.matthewksc.taskmanager.controllers;
 import com.matthewksc.taskmanager.dao.Task;
 import com.matthewksc.taskmanager.services.TaskService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -24,6 +26,11 @@ public class TaskController {
     @GetMapping("/{Id}")
     public Optional<Task> getTaskById(@PathVariable Long Id){
         return taskService.findById(Id);
+    }
+
+    @GetMapping("/byTaskList/{taskListId}")
+    public List<Task> getTaskByTaskList(@PathVariable Long taskListId){
+        return taskService.getTaskByTaskList(taskListId);
     }
 
     @PostMapping
