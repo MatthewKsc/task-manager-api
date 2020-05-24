@@ -8,6 +8,7 @@ basic controllers to provide Task and TaskList endpoints
 folder with entity's and repositories
 * `task-manager/src/main/java/com/matthewksc/taskmanager/services` ->
 folder separate dao from controllers.
+* `task-ng-api` - folder with angular that consume endpoints
 
 # TaskNgApi
 
