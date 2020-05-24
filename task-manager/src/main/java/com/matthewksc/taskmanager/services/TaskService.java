@@ -20,8 +20,13 @@ public class TaskService {
         this.taskListRepository = taskListRepository;
     }
 
-    public Task save(Task task) {
-        return taskRepository.save(task);
+    public Task save(Task task, Long taskListId) {
+        TaskList taskList = taskListRepository.findById(taskListId)
+                .orElseThrow(()-> new RuntimeException("Can't find task list with id: "+taskListId));
+        task.setTaskList(taskList);
+        taskRepository.save(task);
+
+        return task;
     }
 
     public Optional<Task> findById(Long Id) {

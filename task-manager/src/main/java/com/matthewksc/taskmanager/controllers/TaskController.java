@@ -33,9 +33,9 @@ public class TaskController {
         return taskService.getTaskByTaskList(taskListId);
     }
 
-    @PostMapping
-    public Task saveTask(@RequestBody Task task){
-        taskService.save(task);
+    @PostMapping("/{taskListId}")
+    public Task saveTask(@RequestBody Task task, @PathVariable Long taskListId){
+        taskService.save(task, taskListId);
         return task;
     }
 

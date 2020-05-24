@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TaskList} from "./TaskList/task-list";
 import {ApiServiceService} from "../services/api-service.service";
+import {Task} from "./Task/task";
 
 @Component({
   selector: 'app-task',
@@ -9,15 +10,17 @@ import {ApiServiceService} from "../services/api-service.service";
 })
 export class TaskComponent implements OnInit {
   taskLists: TaskList[] = [];
+  tasks: Task[] = [];
   selectedTaskList: TaskList;
 
   constructor(private apiService: ApiServiceService) { }
 
   ngOnInit(): void {
     this.getAllTaskList();
+    this.getAllTasks();
   }
 
-  public getAllTaskList(){
+  getAllTaskList(){
     this.apiService.getAllTaskList().subscribe(
       res =>{
         this.taskLists = res;
@@ -69,5 +72,66 @@ export class TaskComponent implements OnInit {
 
   selectTaskList(taskList: TaskList) {
     this.selectedTaskList = taskList;
+    this.apiService.getTaskOfTaskList(taskList.id).subscribe(
+      res=>{
+        this.tasks= res;
+      },
+      error => {
+        alert("An error has occurred while getting all tasks of task list")
+      }
+    )
+  }
+
+  getAllTasks(){
+    this.selectedTaskList = null;
+    this.apiService.getAllTasks().subscribe(
+      res=>{
+        this.tasks = res;
+      },
+      error => {
+        alert("An error has occurred while getting all tasks")
+      }
+    )
+  }
+
+  createTask(id: number) {
+    let newTask: Task={
+      id : null,
+      title : "new task",
+      description : "put text here",
+      dateOfCreate : new Date()
+    }
+    this.apiService.addTask(newTask, id).subscribe(
+      res=>{
+        newTask.id = res.id;
+        this.tasks.push(newTask);
+      },
+      error => {
+        alert("Error occurred while saving task")
+      }
+    )
+  }
+
+  deleteTask(task: Task) {
+    if (confirm("Are you sure to delete task ?")) {
+      this.apiService.deleteTask(task.id).subscribe(
+        res => {
+          let indexOfTask = this.tasks.indexOf(task);
+          this.tasks.slice(indexOfTask, 1)
+        },
+        error => {
+          alert("Error occurred on deleteTask method")
+        }
+      )
+    }
+  }
+
+  updateTask(task: Task, id: number) {
+    this.apiService.addTask(task, id).subscribe(
+      res=>{},
+      error => {
+        alert("Error occurred while saving task")
+      }
+    )
   }
 }
