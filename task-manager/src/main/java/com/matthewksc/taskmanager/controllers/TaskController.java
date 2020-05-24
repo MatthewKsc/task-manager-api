@@ -3,9 +3,9 @@ package com.matthewksc.taskmanager.controllers;
 import com.matthewksc.taskmanager.dao.Task;
 import com.matthewksc.taskmanager.services.TaskService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/task")
 public class TaskController {
