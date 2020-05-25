@@ -32,4 +32,8 @@ public class UserController {
     public TaskList saveTaskList(@RequestBody TaskList taskList, @PathVariable Long userId){
         return userService.saveTaskList(taskList, userId);
     }
+//
+//    public void getUserDetails(){
+//
+//    }
 }
