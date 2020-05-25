@@ -2,6 +2,7 @@ package com.matthewksc.taskmanager.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -25,11 +26,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.headers().disable();
         http.authorizeRequests()
-                .anyRequest().authenticated()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .antMatchers("/task/**").authenticated()
+                .antMatchers("/tasks/lists").authenticated()
+                .antMatchers("/tasks/lists/**").authenticated()
+                .antMatchers("/user/**").authenticated()
                 .and()
-                    .formLogin();
+                    .formLogin()
+                .and()
+                    .logout()
+                        .clearAuthentication(true)
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID");
     }
 
     @Bean

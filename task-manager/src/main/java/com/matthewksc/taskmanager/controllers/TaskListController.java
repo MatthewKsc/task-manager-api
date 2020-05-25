@@ -8,7 +8,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/task/lists")
+@RequestMapping("/tasks/lists")
 public class TaskListController {
 
     private TaskListService taskListService;

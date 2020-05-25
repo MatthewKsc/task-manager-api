@@ -8,9 +8,9 @@ import {Task} from "../task/Task/task";
   providedIn: 'root'
 })
 export class ApiServiceService {
-  private BASIC_URL = "http://localhost:8080";
-  private ALL_TASK_LIST= `${this.BASIC_URL}\\task\\lists`;
-  private DELETE_TASK_LIST= `${this.BASIC_URL}\\task\\lists\\`;
+  private BASIC_URL = "http://localhost:8082";
+  private ALL_TASK_LIST= `${this.BASIC_URL}\\tasks\\lists`;
+  private DELETE_TASK_LIST= `${this.BASIC_URL}\\tasks\\lists\\`;
   private GET_ALL_TASKS = `${this.BASIC_URL}\\task\\all`;
   private GET_TASK_BY_TASK_LIST = `${this.BASIC_URL}\\task\\byTaskList\\`;
   private POST_TASK = `${this.BASIC_URL}\\task\\`;
