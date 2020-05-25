@@ -30,7 +30,8 @@ public class init {
 
     @EventListener(ApplicationReadyEvent.class)
     public void start(){
-        User user = new User("user",passwordEncoder.encode("user123"), "user@wp.pl", Role.ROLE_USER);
+        User user = new User("user",passwordEncoder.encode("user123")
+                , "user@wp.pl", Role.ROLE_USER);
         userRepository.save(user);
 
         TaskList taskList = new TaskList("My Tasks", user);

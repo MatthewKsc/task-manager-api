@@ -27,8 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.csrf().disable();
         http.headers().disable();
         http.authorizeRequests()
-                .anyRequest().authenticated()
-                .and().formLogin();
+                .anyRequest().permitAll();
     }
 
     @Bean
