@@ -1,10 +1,8 @@
 package com.matthewksc.taskmanager.services;
 
-import com.matthewksc.taskmanager.dao.TaskList;
+import com.matthewksc.taskmanager.dao.entity.TaskList;
 import com.matthewksc.taskmanager.dao.TaskListRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class TaskListService {

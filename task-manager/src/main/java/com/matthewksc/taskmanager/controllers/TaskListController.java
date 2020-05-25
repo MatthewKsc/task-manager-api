@@ -1,6 +1,6 @@
 package com.matthewksc.taskmanager.controllers;
 
-import com.matthewksc.taskmanager.dao.TaskList;
+import com.matthewksc.taskmanager.dao.entity.TaskList;
 import com.matthewksc.taskmanager.services.TaskListService;
 import org.springframework.web.bind.annotation.*;
 

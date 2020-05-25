@@ -1,4 +1,4 @@
-package com.matthewksc.taskmanager.dao;
+package com.matthewksc.taskmanager.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

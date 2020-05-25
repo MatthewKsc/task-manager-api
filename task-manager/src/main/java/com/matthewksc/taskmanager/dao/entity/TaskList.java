@@ -1,6 +1,7 @@
-package com.matthewksc.taskmanager.dao;
+package com.matthewksc.taskmanager.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.matthewksc.taskmanager.dao.entity.Task;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,11 +19,16 @@ public class TaskList {
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "taskList")
     private List<Task> tasks = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore //prevent of nested calls
+    private User user;
+
     public TaskList() {
     }
 
-    public TaskList(String categoryOfTask) {
+    public TaskList(String categoryOfTask, User user) {
         this.categoryOfTask = categoryOfTask;
+        this.user = user;
     }
 
     public Long getId() {
@@ -51,5 +57,13 @@ public class TaskList {
 
     public void addTask(Task task) {
         this.tasks.add(task);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
