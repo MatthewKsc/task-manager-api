@@ -1,8 +1,11 @@
 package com.matthewksc.taskmanager.controllers;
 
+import com.matthewksc.taskmanager.dao.entity.MyUserDetails;
 import com.matthewksc.taskmanager.dao.entity.TaskList;
 import com.matthewksc.taskmanager.dao.entity.User;
 import com.matthewksc.taskmanager.services.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,8 +35,11 @@ public class UserController {
     public TaskList saveTaskList(@RequestBody TaskList taskList, @PathVariable Long userId){
         return userService.saveTaskList(taskList, userId);
     }
-//
-//    public void getUserDetails(){
-//
-//    }
+
+    @GetMapping("/userDetails")
+    public Object getUserDetails(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
+        return myUserDetails;
+    }
 }
