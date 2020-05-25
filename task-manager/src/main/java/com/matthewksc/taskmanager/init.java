@@ -9,6 +9,7 @@ import com.matthewksc.taskmanager.dao.TaskRepository;
 import com.matthewksc.taskmanager.dao.entity.User;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 
@@ -18,16 +19,18 @@ public class init {
     private TaskListRepository taskListRepository;
     private TaskRepository taskRepository;
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public init(TaskListRepository taskListRepository, TaskRepository taskRepository, UserRepository userRepository) {
+    public init(TaskListRepository taskListRepository, TaskRepository taskRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.taskListRepository = taskListRepository;
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    public void init(){
-        User user = new User("user", "user123", "user@wp.pl", Role.ROLE_USER);
+    public void start(){
+        User user = new User("user",passwordEncoder.encode("user123"), "user@wp.pl", Role.ROLE_USER);
         userRepository.save(user);
 
         TaskList taskList = new TaskList("My Tasks", user);
