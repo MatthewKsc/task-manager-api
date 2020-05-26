@@ -1,5 +1,6 @@
 package com.matthewksc.taskmanager.security;
 
+import com.matthewksc.taskmanager.jwt.UserFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -26,7 +27,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests()
+        http.addFilter(new UserFilter(authenticationManager()))
+                .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/task/**").authenticated()
                 .antMatchers("/tasks/lists").authenticated()
