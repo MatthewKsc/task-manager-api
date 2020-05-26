@@ -3,16 +3,30 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { HomeComponent } from './home/home.component';
-import { TaskComponent } from './task/task.component';
+import { HomeComponent } from './components/home/home.component';
+import { TaskComponent } from './components/task/task.component';
 import {Router, RouterModule, Routes} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import {ApiServiceService} from "./services/api-service.service";
+import {AuthServiceService} from "./services/auth-service.service";
+import {AuthGuard} from "./services/auth-guard";
+import { LoginComponent } from './components/login/login.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 
 const appRoutes: Routes =[
   {
     path:'task',
-    component: TaskComponent
+    component: TaskComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'login',
+    component: LoginComponent
+  },
+  {
+    path:'register',
+    component: RegistrationComponent
   },
   {
     path:'home',
@@ -31,7 +45,9 @@ const appRoutes: Routes =[
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    TaskComponent
+    TaskComponent,
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +55,7 @@ const appRoutes: Routes =[
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [AuthServiceService,ApiServiceService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
