@@ -1,1 +1,18 @@
-<p>login works!</p>
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Login Form -->
+    <form>
+      <input type="text" id="username" class="fadeIn second" name="username" [(ngModel)]="username" placeholder="login">
+      <input type="text" id="password" class="fadeIn third" name="password" [(ngModel)]="password" placeholder="password">
+      <input type="submit" class="fadeIn fourth" value="Log In"
+             (click)="login()">
+    </form>
+
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Sing up?</a>
+    </div>
+
+  </div>
+</div>

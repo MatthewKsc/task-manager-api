@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.session.SessionManagementFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
@@ -20,6 +23,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         this.myUserDetailsService = myUserDetailsService;
     }
 
+    @Bean
+    CorsFilter corsFilter(){
+        CorsFilter filter = new CorsFilter(); //this filter is for request from angular (before this
+        return filter;                       //i was getting CORS Exception)
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(myUserDetailsService);
@@ -28,10 +37,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.addFilter(new UserFilter(authenticationManager()))
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS).permitAll();
+        http
+                .addFilterBefore(corsFilter(), SessionManagementFilter.class)
+                .addFilter(new UserFilter(authenticationManager()))
                 .addFilterAfter(new TokenVerify(), UserFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/task/**").authenticated()
                 .antMatchers("/tasks/lists").authenticated()
                 .antMatchers("/tasks/lists/**").authenticated()

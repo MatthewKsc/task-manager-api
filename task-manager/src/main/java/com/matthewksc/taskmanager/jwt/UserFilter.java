@@ -57,6 +57,8 @@ public class UserFilter extends UsernamePasswordAuthenticationFilter {
                 .signWith(Keys.hmacShaKeyFor(("secretkeytotaskapiyouarewelcomefsfsgefsefesfesg" +
                         "sggessecretetecscesetszdwce").getBytes()))
                 .compact();
+
+        response.setHeader("Access-Control-Allow-Origin", "*"); //respons with this header to angular
         response.addHeader("Authorization", "Bearer "+token);
     }
 }
