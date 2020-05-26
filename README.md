@@ -9,7 +9,9 @@ folder with entity's and repositories
 * `task-manager/src/main/java/com/matthewksc/taskmanager/services` ->
 folder separate dao from controllers.
 * `task-manager/src/main/java/com/matthewksc/taskmanager/security` -> security 
-config for application(//TODO JWT token)
+config for application
+* `task-manager/src/main/java/com/matthewksc/taskmanager/jwt` -> Implementation
+of JSON Web Token (//todo refactor hard coded pieces)
 * `task-ng-api` - folder with angular that consume endpoints !!FOR NOW ANGULAR IS NOT WORKING
 BECAUSE OF AUTHENTICATION NOT IMPLEMENTED 
 
