@@ -1,5 +1,6 @@
 package com.matthewksc.taskmanager.security;
 
+import com.matthewksc.taskmanager.jwt.TokenVerify;
 import com.matthewksc.taskmanager.jwt.UserFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.addFilter(new UserFilter(authenticationManager()))
+                .addFilterAfter(new TokenVerify(), UserFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/task/**").authenticated()
