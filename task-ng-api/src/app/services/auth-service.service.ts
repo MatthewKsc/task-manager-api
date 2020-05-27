@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {ApiServiceService} from "./api-service.service";
+import {TaskComponent} from "../components/task/task.component";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,7 @@ export class AuthServiceService {
   private POST_LOGIN= `${this.BASIC_URL}\\login`
   isLogged: boolean;
   Token: string;
+  userId: string;
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -23,8 +26,9 @@ export class AuthServiceService {
       .subscribe(
         resp=>{
           this.Token = resp.headers.get('authorization');
-          console.log(this.Token);
-          //getCurrentUser
+          this.userId = resp.headers.get(`UserId`);
+          // console.log(this.userId);
+          // console.log(this.Token);
           this.isLogged = true;
           this.router.navigateByUrl('/task');
         },

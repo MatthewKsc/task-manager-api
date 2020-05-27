@@ -10,24 +10,23 @@ import {AuthServiceService} from "./auth-service.service";
 })
 export class ApiServiceService {
   private BASIC_URL = "http://localhost:8082";
-  private ALL_TASK_LIST= `${this.BASIC_URL}\\tasks\\lists`;
+  private ALL_USER_TASK_LISTS= `${this.BASIC_URL}\\user\\${this.authService.userId}\\taskList`;
+  private ADD_USER_TASK_LIST = `${this.BASIC_URL}\\user\\${this.authService.userId}`;
   private DELETE_TASK_LIST= `${this.BASIC_URL}\\tasks\\lists\\`;
   private GET_ALL_TASKS = `${this.BASIC_URL}\\task\\all`;
   private GET_TASK_BY_TASK_LIST = `${this.BASIC_URL}\\task\\byTaskList\\`;
   private POST_TASK = `${this.BASIC_URL}\\task\\`;
   private DELETE_TASK = `${this.BASIC_URL}\\task\\`;
 
-  constructor(private http: HttpClient, private authService: AuthServiceService) { }
+  constructor(private http: HttpClient, private authService: AuthServiceService) {
+  }
 
   getAllTaskList() : Observable<TaskList[]>{
-    // const headers = new HttpHeaders({
-    //   'Authorization': `${this.authService.Token}`
-    // })
-    return this.http.get<TaskList[]>(this.ALL_TASK_LIST)
+    return this.http.get<TaskList[]>(this.ALL_USER_TASK_LISTS)
   }
 
   addTaskList(taskList: TaskList) : Observable<TaskList>{
-    return this.http.post<TaskList>(this.ALL_TASK_LIST, taskList)
+    return this.http.post<TaskList>(this.ADD_USER_TASK_LIST, taskList)
   }
 
   deleteTaskList(id: number) : Observable<any>{

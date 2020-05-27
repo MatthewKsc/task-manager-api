@@ -24,11 +24,7 @@ export class TaskComponent implements OnInit {
     this.apiService.getAllTaskList().subscribe(
       res =>{
         this.taskLists = res;
-      },
-      error => {
-        alert("An error has occurred;")
-      }
-    );
+      });
   }
 
   createTaskList() {
@@ -40,19 +36,13 @@ export class TaskComponent implements OnInit {
       res=>{
         newTaskList.id = res.id
         this.taskLists.push(newTaskList);
-      },
-      error => {
-        alert("Error occurred on createTaskList method")
       }
     )
   }
 
   updateTaskList(updatedTaskList: TaskList) {
     this.apiService.addTaskList(updatedTaskList).subscribe(
-      res=>{},
-      error => {
-        alert("Error occurred on updateTaskList method")
-      }
+      res=>{}
     )
   }
 
@@ -62,9 +52,6 @@ export class TaskComponent implements OnInit {
         res=>{
           let indexOfTaskList= this.taskLists.indexOf(taskList)
           this.taskLists.splice(indexOfTaskList, 1)
-        },
-        error => {
-          alert("Error occurred on deleteTaskList method")
         }
       )
     }
@@ -75,11 +62,7 @@ export class TaskComponent implements OnInit {
     this.apiService.getTaskOfTaskList(taskList.id).subscribe(
       res=>{
         this.tasks= res;
-      },
-      error => {
-        alert("An error has occurred while getting all tasks of task list")
-      }
-    )
+      })
   }
 
   getAllTasks(){
@@ -87,11 +70,7 @@ export class TaskComponent implements OnInit {
     this.apiService.getAllTasks().subscribe(
       res=>{
         this.tasks = res;
-      },
-      error => {
-        alert("An error has occurred while getting all tasks")
-      }
-    )
+      })
   }
 
   createTask(id: number) {
@@ -105,11 +84,7 @@ export class TaskComponent implements OnInit {
       res=>{
         newTask.id = res.id;
         this.tasks.push(newTask);
-      },
-      error => {
-        alert("Error occurred while saving task")
-      }
-    )
+      })
   }
 
   deleteTask(task: Task) {
@@ -118,20 +93,12 @@ export class TaskComponent implements OnInit {
         res => {
           let indexOfTask = this.tasks.indexOf(task);
           this.tasks.slice(indexOfTask, 1)
-        },
-        error => {
-          alert("Error occurred on deleteTask method")
-        }
-      )
+        })
     }
   }
 
   updateTask(task: Task, id: number) {
     this.apiService.addTask(task, id).subscribe(
-      res=>{},
-      error => {
-        alert("Error occurred while saving task")
-      }
-    )
+      res=>{})
   }
 }
