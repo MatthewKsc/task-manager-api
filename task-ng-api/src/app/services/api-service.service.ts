@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {TaskList} from "../components/task/models/task-list";
 import {Observable} from "rxjs";
 import {Task} from "../components/task/models/task";
+import {AuthServiceService} from "./auth-service.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,12 @@ export class ApiServiceService {
   private POST_TASK = `${this.BASIC_URL}\\task\\`;
   private DELETE_TASK = `${this.BASIC_URL}\\task\\`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthServiceService) { }
 
   getAllTaskList() : Observable<TaskList[]>{
+    // const headers = new HttpHeaders({
+    //   'Authorization': `${this.authService.Token}`
+    // })
     return this.http.get<TaskList[]>(this.ALL_TASK_LIST)
   }
 

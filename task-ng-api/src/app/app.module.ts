@@ -7,12 +7,14 @@ import { HomeComponent } from './components/home/home.component';
 import { TaskComponent } from './components/task/task.component';
 import {Router, RouterModule, Routes} from "@angular/router";
 import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ApiServiceService} from "./services/api-service.service";
 import {AuthServiceService} from "./services/auth-service.service";
 import {AuthGuard} from "./services/auth-guard";
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import {CustomInterceptor} from "./custom-interceptor";
+
 
 const appRoutes: Routes =[
   {
@@ -55,7 +57,12 @@ const appRoutes: Routes =[
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AuthServiceService,ApiServiceService, AuthGuard],
+  providers: [AuthServiceService,ApiServiceService, AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

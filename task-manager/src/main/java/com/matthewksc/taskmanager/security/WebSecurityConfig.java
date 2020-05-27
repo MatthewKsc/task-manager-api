@@ -23,12 +23,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         this.myUserDetailsService = myUserDetailsService;
     }
 
-    @Bean
-    CorsFilter corsFilter(){
-        CorsFilter filter = new CorsFilter(); //this filter is for request from angular (before this
-        return filter;                       //i was getting CORS Exception)
-    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(myUserDetailsService);
@@ -37,13 +31,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-//        http.authorizeRequests()
-//                .antMatchers(HttpMethod.OPTIONS).permitAll();
         http
-                .addFilterBefore(corsFilter(), SessionManagementFilter.class)
+                .cors().and()
                 .addFilter(new UserFilter(authenticationManager()))
                 .addFilterAfter(new TokenVerify(), UserFilter.class)
                 .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/task/**").authenticated()
                 .antMatchers("/tasks/lists").authenticated()
                 .antMatchers("/tasks/lists/**").authenticated()
@@ -56,6 +49,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID");
     }
+
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/tasks/lists").allowedOrigins("http://localhost:4200");
+//            }
+//        };
+//    }
 
     @Bean
     public PasswordEncoder encoder(){

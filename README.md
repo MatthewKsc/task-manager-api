@@ -12,8 +12,8 @@ folder separate dao from controllers.
 config for application
 * `task-manager/src/main/java/com/matthewksc/taskmanager/jwt` -> Implementation
 of JSON Web Token (//todo refactor hard coded pieces)
-* `task-ng-api` - folder with angular that consume endpoints !!FOR NOW ANGULAR IS NOT WORKING
-BECAUSE OF AUTHENTICATION NOT IMPLEMENTED 
+* `task-ng-api` - folder with angular that consume endpoints (//todo Task List
+for logged User)
 
 # TaskNgApi
 
