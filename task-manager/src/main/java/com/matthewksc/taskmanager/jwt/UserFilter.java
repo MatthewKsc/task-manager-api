@@ -58,7 +58,9 @@ public class UserFilter extends UsernamePasswordAuthenticationFilter {
                         "sggessecretetecscesetszdwce").getBytes()))
                 .compact();
 
-        response.setHeader("Access-Control-Allow-Origin", "*"); //respons with this header to angular
+        response.addHeader("Access-Control-Expose-Headers", "Authorization");
+//        response.addHeader("Access-Control-Allow-Headers", "*");
+        response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");//respons with this header to angular
         response.addHeader("Authorization", "Bearer "+token);
     }
 }
