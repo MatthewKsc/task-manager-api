@@ -1,6 +1,7 @@
 package com.matthewksc.taskmanager.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matthewksc.taskmanager.dao.entity.MyUserDetails;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -8,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -58,8 +60,13 @@ public class UserFilter extends UsernamePasswordAuthenticationFilter {
                         "sggessecretetecscesetszdwce").getBytes()))
                 .compact();
 
-        response.addHeader("Access-Control-Expose-Headers", "Authorization");
-        response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");//response with this header to angular
+        MyUserDetails myUserDetails = (MyUserDetails) authResult.getPrincipal();
+        Long currentUserId = myUserDetails.getId(); //getting userId for request to UserController
+
+        response.addHeader("UserId", Long.toString(currentUserId));
+        response.addHeader("Access-Control-Expose-Headers", "Authorization, UserId");
+        response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        //response with this header to angular
         response.addHeader("Authorization", "Bearer "+token);
     }
 }

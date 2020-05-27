@@ -35,11 +35,4 @@ public class UserController {
     public TaskList saveTaskList(@RequestBody TaskList taskList, @PathVariable Long userId){
         return userService.saveTaskList(taskList, userId);
     }
-
-    @GetMapping("/userDetails")
-    public Object getUserDetails(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
-        return myUserDetails;
-    }
 }
