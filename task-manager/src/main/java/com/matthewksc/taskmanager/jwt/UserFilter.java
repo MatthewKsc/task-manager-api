@@ -23,8 +23,10 @@ import java.util.Date;
 public class UserFilter extends UsernamePasswordAuthenticationFilter {
 
     private AuthenticationManager manager;
+    private JwtConfig jwt;
 
-    public UserFilter(AuthenticationManager manager) {
+    public UserFilter(AuthenticationManager manager, JwtConfig jwt) {
+        this.jwt = jwt;
         this.manager = manager;
     }
 
@@ -56,8 +58,7 @@ public class UserFilter extends UsernamePasswordAuthenticationFilter {
                 .claim("authorities", authResult.getAuthorities())
                 .setIssuedAt(new Date())
                 .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(1)))
-                .signWith(Keys.hmacShaKeyFor(("secretkeytotaskapiyouarewelcomefsfsgefsefesfesg" +
-                        "sggessecretetecscesetszdwce").getBytes()))
+                .signWith(Keys.hmacShaKeyFor(jwt.getKey().getBytes()))
                 .compact();
 
         MyUserDetails myUserDetails = (MyUserDetails) authResult.getPrincipal();
@@ -67,6 +68,6 @@ public class UserFilter extends UsernamePasswordAuthenticationFilter {
         response.addHeader("Access-Control-Expose-Headers", "Authorization, UserId");
         response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         //response with this header to angular
-        response.addHeader("Authorization", "Bearer "+token);
+        response.addHeader(jwt.getHeader(), jwt.getPrefix()+token);
     }
 }

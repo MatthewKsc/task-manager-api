@@ -1,5 +1,6 @@
 package com.matthewksc.taskmanager.security;
 
+import com.matthewksc.taskmanager.jwt.JwtConfig;
 import com.matthewksc.taskmanager.jwt.TokenVerify;
 import com.matthewksc.taskmanager.jwt.UserFilter;
 import org.springframework.context.annotation.Bean;
@@ -16,9 +17,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     private MyUserDetailsService myUserDetailsService;
+    private JwtConfig jwtConfig;
 
-    public WebSecurityConfig(MyUserDetailsService myUserDetailsService) {
+    public WebSecurityConfig(MyUserDetailsService myUserDetailsService, JwtConfig jwtConfig) {
         this.myUserDetailsService = myUserDetailsService;
+        this.jwtConfig = jwtConfig;
     }
 
     @Override
@@ -37,8 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 //        http.headers().disable(); for h2 database
         http
                 .cors().and()
-                .addFilter(new UserFilter(authenticationManager()))
-                .addFilterAfter(new TokenVerify(), UserFilter.class)
+                .addFilter(new UserFilter(authenticationManager(), jwtConfig))
+                .addFilterAfter(new TokenVerify(jwtConfig), UserFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/task/**").authenticated()

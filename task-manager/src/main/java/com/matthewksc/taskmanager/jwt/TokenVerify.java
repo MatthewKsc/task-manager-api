@@ -23,25 +23,29 @@ import java.util.stream.Collectors;
 
 public class TokenVerify extends OncePerRequestFilter {
 
+    private JwtConfig jwt;
+
+    public TokenVerify(JwtConfig jwt) {
+        this.jwt = jwt;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        String authorizationHeader = request.getHeader("Authorization");
+        String authorizationHeader = request.getHeader(jwt.getHeader());
         if (authorizationHeader.isEmpty() || authorizationHeader.equals(null)
-                || !authorizationHeader.startsWith("Bearer ")){
+                || !authorizationHeader.startsWith(jwt.getPrefix())){
             filterChain.doFilter(request,response);
             return;
         }
 
         try {
-            String token = authorizationHeader.replace("Bearer ", "");
+            String token = authorizationHeader.replace(jwt.getPrefix(), "");
 
             Jws<Claims> claimsJws = Jwts.parserBuilder()
-                    .setSigningKey(Keys.hmacShaKeyFor(("secretkeytotaskapiyouarewelcomefsfsgefsefesfesg" +
-                            "sggessecretetecscesetszdwce").getBytes()))
+                    .setSigningKey(Keys.hmacShaKeyFor(jwt.getKey().getBytes()))
                     .build()
                     .parseClaimsJws(token);
 
