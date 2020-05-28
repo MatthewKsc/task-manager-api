@@ -38,4 +38,10 @@ export class AuthServiceService {
   register(user: User) : Observable<User>{
     return this.http.post<User>(this.REGISTER_URL, user);
   }
+
+  logout(){
+    this.isLogged=false;
+    this.Token="";
+    this.router.navigateByUrl('/home');
+  }
 }

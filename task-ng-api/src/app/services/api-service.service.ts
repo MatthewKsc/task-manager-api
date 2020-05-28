@@ -34,7 +34,7 @@ export class ApiServiceService {
   }
 
   getAllTasks() : Observable<Task[]>{
-    return this.http.get<Task[]>(this.GET_ALL_TASKS)
+    return this.http.get<Task[]>(this.GET_ALL_TASKS) //getTask of user
   }
 
   getTaskOfTaskList(taskListId: number) : Observable<Task[]> {

@@ -8,11 +8,14 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/task">Task's</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="authService.isLogged!=true">
         <a class="nav-link" routerLink="/login">Sing in</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="authService.isLogged!=true">
         <a class="nav-link" routerLink="/register">Sing up</a>
+      </li>
+      <li class="nav-item" *ngIf="authService.isLogged==true">
+        <a class="nav-link" (click)="logout()">Logout</a>
       </li>
     </ul>
   </div>
