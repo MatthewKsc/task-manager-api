@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {ApiServiceService} from "./api-service.service";
-import {TaskComponent} from "../components/task/task.component";
+import {User} from "../components/task/models/user";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class AuthServiceService {
 
   private BASIC_URL = "http://localhost:8082";
   private POST_LOGIN= `${this.BASIC_URL}\\login`
+  private REGISTER_URL = `${this.BASIC_URL}\\user\\register`;
   isLogged: boolean;
   Token: string;
   userId: string;
@@ -31,9 +32,10 @@ export class AuthServiceService {
           // console.log(this.Token);
           this.isLogged = true;
           this.router.navigateByUrl('/task');
-        },
-        error => {
-          alert("Error while login to service");
         });
+  }
+
+  register(user: User) : Observable<User>{
+    return this.http.post<User>(this.REGISTER_URL, user);
   }
 }
