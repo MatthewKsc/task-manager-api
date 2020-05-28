@@ -28,12 +28,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+//        http.headers().disable(); for h2 database
         http
                 .cors().and()
                 .addFilter(new UserFilter(authenticationManager()))
                 .addFilterAfter(new TokenVerify(), UserFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .antMatchers("/user/register").permitAll()
                 .antMatchers("/task/**").authenticated()
                 .antMatchers("/tasks/lists").authenticated()
                 .antMatchers("/tasks/lists/**").authenticated()

@@ -35,4 +35,9 @@ public class UserController {
     public TaskList saveTaskList(@RequestBody TaskList taskList, @PathVariable Long userId){
         return userService.saveTaskList(taskList, userId);
     }
+
+    @PostMapping("/register")
+    public User saveUser(@RequestBody User user){
+        return userService.saveUser(user);
+    }
 }
