@@ -1,9 +1,9 @@
 package com.matthewksc.taskmanager.services;
 
-import com.matthewksc.taskmanager.dao.entity.Task;
-import com.matthewksc.taskmanager.dao.entity.TaskList;
 import com.matthewksc.taskmanager.dao.TaskListRepository;
 import com.matthewksc.taskmanager.dao.TaskRepository;
+import com.matthewksc.taskmanager.dao.entity.Task;
+import com.matthewksc.taskmanager.dao.entity.TaskList;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

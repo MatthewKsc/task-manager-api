@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 import {TaskList} from "../components/task/models/task-list";
 import {Observable} from "rxjs";
 import {Task} from "../components/task/models/task";
@@ -10,10 +10,10 @@ import {AuthServiceService} from "./auth-service.service";
 })
 export class ApiServiceService {
   private BASIC_URL = "http://localhost:8082";
-  private ALL_USER_TASK_LISTS= `${this.BASIC_URL}\\user\\${this.authService.userId}\\taskList`;
+  private ALL_USER_TASK_LISTS= `${this.BASIC_URL}\\user\\taskList\\${this.authService.userId}`;
   private ADD_USER_TASK_LIST = `${this.BASIC_URL}\\user\\${this.authService.userId}`;
   private DELETE_TASK_LIST= `${this.BASIC_URL}\\tasks\\lists\\`;
-  private GET_ALL_TASKS = `${this.BASIC_URL}\\task\\all`;
+  private GET_ALL_TASKS = `${this.BASIC_URL}\\user\\tasks\\${this.authService.userId}`;
   private GET_TASK_BY_TASK_LIST = `${this.BASIC_URL}\\task\\byTaskList\\`;
   private POST_TASK = `${this.BASIC_URL}\\task\\`;
   private DELETE_TASK = `${this.BASIC_URL}\\task\\`;
@@ -34,7 +34,7 @@ export class ApiServiceService {
   }
 
   getAllTasks() : Observable<Task[]>{
-    return this.http.get<Task[]>(this.GET_ALL_TASKS) //getTask of user
+    return this.http.get<Task[]>(this.GET_ALL_TASKS)
   }
 
   getTaskOfTaskList(taskListId: number) : Observable<Task[]> {

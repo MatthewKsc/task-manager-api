@@ -1,11 +1,9 @@
 package com.matthewksc.taskmanager.controllers;
 
-import com.matthewksc.taskmanager.dao.entity.MyUserDetails;
+import com.matthewksc.taskmanager.dao.entity.Task;
 import com.matthewksc.taskmanager.dao.entity.TaskList;
 import com.matthewksc.taskmanager.dao.entity.User;
 import com.matthewksc.taskmanager.services.UserService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,9 +24,14 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{byUserId}/taskList")
+    @GetMapping("/taskList/{byUserId}")
     public List<TaskList> getAllTaskListByUser(@PathVariable Long byUserId){
         return userService.getAllTaskListByUser(byUserId);
+    }
+
+    @GetMapping("/tasks/{userId}")
+    public List<Task> getTaskByUser(@PathVariable Long userId){
+        return userService.getAllTaskByUser(userId);
     }
 
     @PostMapping("/{userId}")

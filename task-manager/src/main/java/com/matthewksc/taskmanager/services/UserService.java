@@ -1,12 +1,15 @@
 package com.matthewksc.taskmanager.services;
 
 import com.matthewksc.taskmanager.dao.TaskListRepository;
+import com.matthewksc.taskmanager.dao.TaskRepository;
 import com.matthewksc.taskmanager.dao.UserRepository;
 import com.matthewksc.taskmanager.dao.entity.Role;
+import com.matthewksc.taskmanager.dao.entity.Task;
 import com.matthewksc.taskmanager.dao.entity.TaskList;
 import com.matthewksc.taskmanager.dao.entity.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -14,12 +17,14 @@ public class UserService {
 
     private UserRepository userRepository;
     private TaskListRepository taskListRepository;
+    private TaskRepository taskRepository;
     private PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, TaskListRepository taskListRepository,
-                       PasswordEncoder passwordEncoder) {
+                       TaskRepository taskRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.taskListRepository = taskListRepository;
+        this.taskRepository = taskRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -32,6 +37,13 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Can't find user with id: "+userId));
         List<TaskList> taskLists = taskListRepository.findAllByUser(user);
         return taskLists;
+    }
+
+    public List<Task> getAllTaskByUser(Long userId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Can't find user with id: "+userId));
+        List<Task> tasks = taskRepository.findAllByTaskList_User(user);
+        return tasks;
     }
 
     public TaskList saveTaskList(TaskList taskList, Long userId){
