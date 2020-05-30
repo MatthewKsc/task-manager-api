@@ -1,6 +1,6 @@
 application:
   secret:
-    jwtKey: "secretkeytotaskapiyouarewelcomefsfsgefsefesfesgsggessecretetecscesetszdwce"
+    jwtKey: ${JWT_Token}
     jwtHeader: "Authorization"
     jwtPrefix: "Bearer "
 spring:
