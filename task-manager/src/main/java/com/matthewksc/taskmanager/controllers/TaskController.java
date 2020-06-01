@@ -5,7 +5,6 @@ import com.matthewksc.taskmanager.services.TaskService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -24,7 +23,7 @@ public class TaskController {
     }
 
     @GetMapping("/{Id}")
-    public Optional<Task> getTaskById(@PathVariable Long Id){
+    public Task getTaskById(@PathVariable Long Id){
         return taskService.findById(Id);
     }
 

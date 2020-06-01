@@ -28,16 +28,20 @@ class TaskListServiceTest {
 
     @Test
     void findAll() {
-        given(taskListRepository.findAll()).willReturn(Arrays.asList(new TaskList(),new TaskList()));
+        given(taskListRepository.findAll()).willReturn(Arrays.asList(
+                new TaskList(),
+                new TaskList()
+        ));
 
         List<TaskList> result = (List<TaskList>) taskListService.findAll();
         List<TaskList> fake = new ArrayList<>();
 
-        assertAll(()-> assertEquals(2, result.size()),
+        assertAll(
+                ()-> verify(taskListRepository, times(1)).findAll(),
+                ()-> assertEquals(2, result.size()),
                 ()-> assertEquals(taskListRepository.findAll(), result),
-                ()-> assertNotEquals(fake, result),
-                //verify 2 times because method findAll was called in assertEquals and result variable
-                ()-> verify(taskListRepository, times(2)).findAll());
+                ()-> assertNotEquals(fake, result)
+        );
     }
     @Test
     void findById() {
@@ -47,9 +51,11 @@ class TaskListServiceTest {
 
         TaskList result = taskListService.findById(1L);
 
-        assertAll(() -> assertEquals(list1, result),
+        assertAll(
+                ()-> assertEquals(list1, result),
                 ()-> assertNotEquals(list2, result),
-                ()-> assertThrows(RuntimeException.class, ()-> taskListService.findById(2L)));
+                ()-> assertThrows(RuntimeException.class, ()-> taskListService.findById(2L))
+        );
     }
 
     @Test
@@ -60,9 +66,11 @@ class TaskListServiceTest {
 
         TaskList result = taskListService.save(list1);
 
-        assertAll(() -> assertEquals(list1, result),
+        assertAll(
+                ()-> assertEquals(list1, result),
                 ()-> assertNotEquals(list2, result),
-                ()-> verify(taskListRepository, times(1)).save(list1));
+                ()-> verify(taskListRepository, times(1)).save(list1)
+        );
     }
 
     @Test
@@ -70,5 +78,6 @@ class TaskListServiceTest {
         taskListService.deleteById(1L);
 
         verify(taskListRepository, times(1)).deleteById(1L);
+        verify(taskListRepository, times(0)).deleteById(2L);
     }
 }

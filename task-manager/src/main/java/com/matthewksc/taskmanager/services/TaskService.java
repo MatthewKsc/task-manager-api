@@ -7,7 +7,6 @@ import com.matthewksc.taskmanager.dao.entity.TaskList;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -20,17 +19,17 @@ public class TaskService {
         this.taskListRepository = taskListRepository;
     }
 
-    public Task save(Task task, Long taskListId) {
-        TaskList taskList = taskListRepository.findById(taskListId)
-                .orElseThrow(()-> new RuntimeException("Can't find task list with id: "+taskListId));
-        task.setTaskList(taskList);
-        taskRepository.save(task);
-
-        return task;
+    public Task findById(Long Id) {
+        return taskRepository.findById(Id)
+                .orElseThrow(() -> new RuntimeException(""));
     }
 
-    public Optional<Task> findById(Long Id) {
-        return taskRepository.findById(Id);
+    public Iterable<Task> findAll() {
+        return taskRepository.findAll();
+    }
+
+    public void deleteById(Long Id) {
+        taskRepository.deleteById(Id);
     }
 
     public List<Task> getTaskByTaskList(Long taskListId){
@@ -41,11 +40,12 @@ public class TaskService {
         return tasks;
     }
 
-    public Iterable<Task> findAll() {
-        return taskRepository.findAll();
-    }
+    public Task save(Task task, Long taskListId) {
+        TaskList taskList = taskListRepository.findById(taskListId)
+                .orElseThrow(()-> new RuntimeException("Can't find task list with id: "+taskListId));
+        task.setTaskList(taskList);
+        taskRepository.save(task);
 
-    public void deleteById(Long Id) {
-        taskRepository.deleteById(Id);
+        return task;
     }
 }
