@@ -6,26 +6,22 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = TaskController.class)
-class TaskControllerTest {
+@WebMvcTest(controllers = TaskListController.class)
+class TaskListControllerTest {
 
     @Test
-    void getAllTasks() {
+    void getAllLists() {
     }
 
     @Test
-    void getTaskById() {
+    void getListById() {
     }
 
     @Test
-    void getTaskByTaskList() {
+    void saveTaskList() {
     }
 
     @Test
-    void saveTask() {
-    }
-
-    @Test
-    void deleteTaskById() {
+    void deleteListById() {
     }
 }
