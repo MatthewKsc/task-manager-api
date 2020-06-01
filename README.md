@@ -13,6 +13,9 @@ config for application
 * `task-manager/src/main/java/com/matthewksc/taskmanager/jwt` -> Implementation
 of JSON Web Token
 * `task-ng-api` - folder with angular that consume endpoints
+* `task-manager/src/test/java/com/matthewksc/taskmanager` -> provided test's for services,
+controllers etc.
+
 # TaskNgApi
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.6.
