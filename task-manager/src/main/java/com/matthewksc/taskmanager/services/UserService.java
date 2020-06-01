@@ -32,6 +32,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User saveUser(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.ROLE_USER);
+        return userRepository.save(user);
+    }
+
     public List<TaskList> getAllTaskListByUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Can't find user with id: "+userId));
@@ -52,11 +58,5 @@ public class UserService {
         taskList.setUser(user);
         taskListRepository.save(taskList);
         return taskList;
-    }
-
-    public User saveUser(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.ROLE_USER);
-        return userRepository.save(user);
     }
 }
