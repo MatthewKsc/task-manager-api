@@ -43,8 +43,8 @@ class TaskListControllerTest {
     @MockBean
     private TaskListService taskListService;
 
-    private static String BASIC_URL = "/tasks/lists";
-    private static String GET_DELETE_TASK_LIST = "/tasks/lists/";
+    private static final String BASIC_URL = "/tasks/lists";
+    private static final String GET_DELETE_TASK_LIST = "/tasks/lists/";
 
     @Test
     void getAllLists() throws Exception {

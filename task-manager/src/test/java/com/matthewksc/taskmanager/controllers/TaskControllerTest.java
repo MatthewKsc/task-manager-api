@@ -45,10 +45,10 @@ class TaskControllerTest {
     @MockBean
     private TaskService taskService;
 
-    private static String BASIC_URL = "/task";
-    private static String ALL_TASKS_URL = BASIC_URL+"/all";
-    private static String GET_POST_DELETE_TASK = BASIC_URL+"/";
-    private static String GET_TASKS_BY_TASK_LIST = BASIC_URL+"/byTaskList/";
+    private static final String BASIC_URL = "/task";
+    private static final String ALL_TASKS_URL = BASIC_URL+"/all";
+    private static final String GET_POST_DELETE_TASK = BASIC_URL+"/";
+    private static final String GET_TASKS_BY_TASK_LIST = BASIC_URL+"/byTaskList/";
 
     @Test
     void getAllTasks() throws Exception{
