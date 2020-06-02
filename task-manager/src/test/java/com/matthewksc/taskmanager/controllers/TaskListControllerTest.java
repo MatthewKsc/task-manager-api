@@ -37,13 +37,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 class TaskListControllerTest {
 
-    private static String BASIC_URL = "/tasks/lists";
-
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private TaskListService taskListService;
+
+    private static String BASIC_URL = "/tasks/lists";
+    private static String GET_DELETE_TASK_LIST = "/tasks/lists/";
 
     @Test
     void getAllLists() throws Exception {
@@ -64,7 +65,7 @@ class TaskListControllerTest {
         taskList.setCategoryOfTask("test");
         given(taskListService.findById(1L)).willReturn(taskList);
 
-        mockMvc.perform(get(BASIC_URL+"/"+1))
+        mockMvc.perform(get(GET_DELETE_TASK_LIST+1))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(taskList.getId())))
@@ -84,7 +85,7 @@ class TaskListControllerTest {
 
     @Test
     void deleteListById() throws Exception{
-        mockMvc.perform(delete(BASIC_URL+"/"+1))
+        mockMvc.perform(delete(GET_DELETE_TASK_LIST+1))
                 .andExpect(status().isOk());
 
         verify(taskListService, times(1)).deleteById(1L);
