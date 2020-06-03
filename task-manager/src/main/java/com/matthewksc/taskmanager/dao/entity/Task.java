@@ -28,6 +28,11 @@ public class Task {
         this.dateOfCreate = dateOfCreate;
         this.description = description;
     }
+    public Task(String title, String description, Date dateOfCreate) {
+        this.title = title;
+        this.dateOfCreate = dateOfCreate;
+        this.description = description;
+    }
 
     public Long getId() {
         return id;
